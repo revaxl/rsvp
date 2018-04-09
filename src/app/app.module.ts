@@ -8,16 +8,19 @@ import { AppComponent } from './app.component';
 
 import { environment } from '../environments/environment';
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFirestoreModule  } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 
 import { AuthService } from './services/auth.service';
+import { EventsService } from './services/events.service';
+
 import { LoginComponent } from './login/login.component';
 
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
+import { EventsComponent } from './events/events.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -31,7 +34,8 @@ const appRoutes: Routes = [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    SignupComponent
+    SignupComponent,
+    EventsComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -42,10 +46,10 @@ const appRoutes: Routes = [
     AppRoutingModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase, 'angular-auth-firebase'),
-    AngularFireDatabaseModule,
+    AngularFirestoreModule,
     AngularFireAuthModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, EventsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

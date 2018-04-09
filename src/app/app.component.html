@@ -16,6 +16,9 @@
             <a class="nav-link" routerLink="/signup">register</a>
           </li>
         </ul>
+        <div class="form-inline mt-2 mt-md-0">
+          <h3 *ngIf="authService.user | async"> {{ (authService.user | async)?.email }}!</h3>
+        </div>
       </div>
 </nav>
 <router-outlet></router-outlet>

@@ -1,7 +1,6 @@
-<!--<h1 *ngIf="authService.user | async">Welcome {{ (authService.user | async)?.email }}!</h1>
--->
+<h1 *ngIf="authService.user | async">Welcome {{ (authService.user | async)?.email }}!</h1>
 
-<div class="form-signin">
+<div *ngIf="!authService.user | async" class="form-signin">
     <h1 class="h3 mb-3 font-weight-normal text-center">Please sign in</h1>
   <input type="email" [(ngModel)]="email" placeholder="email" class="form-control">
   <input type="password" [(ngModel)]="password" placeholder="password" class="form-control">
