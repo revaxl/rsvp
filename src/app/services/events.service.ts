@@ -1,29 +1,30 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "angularfire2/firestore";
-import 'firebase/storage';
-import * as firebase from 'firebase';
-import { Observable } from 'rxjs/Observable';
-
-import { Event } from '../models/events';
+import {Event} from "../models/events";
+import {Headers, Http} from "@angular/http";
+import {Observable} from "rxjs/Observable";
+import 'rxjs/Rx';
 
 @Injectable()
 export class EventsService {
-    
-    getEvent$(): Observable<Event[]> {
-        return this.afs.collection<Event>('events')
-            .snapshotChanges().map(actions => {
-                return actions.map(a => {
-                    const data = a.payload.doc.data() as Event;
-                    const id = a.payload.doc.id;
-                    return {id, ...data};
-                });
-            });
-    };
+  private events: Event[] = [];
 
-    constructor(private afs: AngularFirestore) {
-    }
+  constructor(private http: Http) {}
 
-    ngOnInit(){
-    }
+  getEvents() {
+    return this.http.get('/events')
+      .map((response) => {
+       for (var event of response.json().obj) {
+          console.log(event);
+        };
+        return response.json()})
+      .catch(error => Observable.throw(error.json()));
+  }
 
+  addEvent(event: Event) {
+    console.log(event);
+    const headers = new Headers({"Content-Type": "application/json"});
+    return this.http.post('/events', JSON.stringify(event), {headers: headers})
+      .map(response => console.log(response))
+      .catch(err => Observable.throw(err.json()));
+  }
 }

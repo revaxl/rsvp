@@ -9,27 +9,14 @@ import { Router } from '@angular/router';
 })
 export class SignupComponent implements OnInit {
 
+  username: string;
+  joined: number = Date.now();
   email: string;
   password1: string;
   password2: string;
-  message: string = "";
+  message = "";
 
   constructor(public authService: AuthService, private router: Router,) {}
-
-  signup() {
-    if (this.password1 !== this.password2) console.log('passwords not correct');
-    this.authService.signup(this.email, this.password1, (err) => {
-        if (err){
-            this.message = err; 
-        }
-        else {
-            this.message = "success, redirecting after 3 seconds";
-            this.email = this.password1 = this.password2 = '';
-            setTimeout(() => {this.router.navigate(['/login']); }, 3000);
-        }
-    });
-    this.message = "";
-    }
 
   ngOnInit() {
   }
