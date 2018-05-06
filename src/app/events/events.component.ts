@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {EventsService} from "../services/events.service";
 import {NgForm, FormGroup, FormControl, Validators} from "@angular/forms";
 import {Event} from "../models/events";
+import {AuthService} from "../services/auth.service";
 
 
 @Component({
@@ -11,19 +12,21 @@ import {Event} from "../models/events";
 })
 export class EventsComponent implements OnInit {
 
-  constructor(private eventService: EventsService) { }
+  constructor(private eventService: EventsService, private authService: AuthService) { }
   myform: FormGroup;
-  events: Event[];
+  events: any;
+  loggedin;
 
   onSubmit() {
       const event = new Event(
         this.myform.value.name,
         this.myform.value.description,
-        this.myform.value.date);
+        JSON.parse(localStorage.getItem('user')).userId,
+        this.myform.value.date,
+        );
 
-      this.eventService.addEvent(event)
-        .subscribe(
-          data => this.events.push(event),
+      this.eventService.addEvent(event).subscribe(
+          data => console.log(data),
           error => console.error(error)
         );
     this.myform.reset();
@@ -33,7 +36,7 @@ export class EventsComponent implements OnInit {
     // get the events from db
     this.eventService.getEvents()
       .subscribe(
-        data => this.events = data.obj,
+        events => this.events = events,
         error => console.log(error));
 
       // initilize the form
@@ -42,5 +45,7 @@ export class EventsComponent implements OnInit {
         description: new FormControl('', Validators.required),
         date: new FormControl('')
       });
+      // check if user is logged in
+      this.loggedin = this.authService.isLoggedIn();
   }
 }

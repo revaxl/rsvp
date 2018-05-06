@@ -38,9 +38,9 @@ app.use('/events', eventsRoutes);
 app.use('/user', userRoutes);
 app.use('/', appRoutes);
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  res.json({error:"404, not working"});
+// Catch all other routes and return the index file
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
 app.listen(3000, function(){

@@ -5,9 +5,9 @@
     </a>
   </div>
   <div class="col-md-5">
-    <h3>{{event.name}}</h3>
-    <p>{{event.description}}</p>
-    <a class="btn btn-primary" href="#">View event</a>
+    <h3>{{event?.name}} - {{event?.user.name}}</h3>
+    <p>{{event?.description}}</p>
+    <a class="btn btn-primary" routerLink="/event/{{event._id}}">View event</a>
   </div>
 </div>
 <hr>

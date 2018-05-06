@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Event} from "../../models/events";
+import { Router } from '@angular/router';
+import { Event } from "../../models/events";
 
 @Component({
   selector: 'app-event',
@@ -9,7 +10,14 @@ import {Event} from "../../models/events";
 export class EventComponent implements OnInit {
   @Input() event: Event;
 
-  constructor() { }
+  constructor(private router: Router) { }
+
+  goToEvent() {
+    console.log("clicked");
+    this.router.navigate(['/event'], { queryParams: { id: this.event.id } })
+  }
+
+  
 
   ngOnInit() {
   }

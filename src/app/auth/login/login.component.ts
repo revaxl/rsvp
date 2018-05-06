@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit{
       .subscribe(
         data => {
           localStorage.setItem('token', data.token);
-          localStorage.setItem('userId', data.userId);
+          localStorage.setItem('user', JSON.stringify(data.user));
           this.router.navigateByUrl('/');
         },
         error => console.error(error)

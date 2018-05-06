@@ -4,6 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpModule } from "@angular/http";
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+
 import { AppComponent } from './app.component';
 
 import { environment } from '../environments/environment';
@@ -18,9 +21,11 @@ import { AuthComponent } from './auth/auth.component';
 
 import { AUTH_ROUTES } from "./auth/auth.routing";
 import { AuthModule } from './auth/auth.module';
+import { EventItemComponent } from './events/event-item/event-item.component';
 
 const appRoutes: Routes = [
   {path: '', component: EventsComponent},
+  {path: 'event/:id', component: EventItemComponent},
   {path: 'auth', component: AuthComponent, children: AUTH_ROUTES },
 
 ];
@@ -30,13 +35,16 @@ const appRoutes: Routes = [
     AppComponent,
     EventsComponent,
     EventComponent,
-    AuthComponent
+    AuthComponent,
+    EventItemComponent
   ],
   imports: [
     RouterModule.forRoot(
       appRoutes,
       {enableTracing: true} // for debugging only
     ),
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(), // ToastrModule added
     BrowserModule,
     AppRoutingModule,
     FormsModule,
